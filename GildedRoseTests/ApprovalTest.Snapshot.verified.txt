@@ -1,0 +1,50 @@
+﻿[
+  {
+    Name: Sulfuras, Hand of Ragnaros,
+    SellIn: 10,
+    Quality: 80
+  },
+  {
+    Name: Aged Brie,
+    SellIn: -2,
+    Quality: 42
+  },
+  {
+    Name: Backstage passes to a TAFKAL80ETC concert,
+    SellIn: 4,
+    Quality: 23
+  },
+  {
+    Name: Cursed Stone Idol,
+    SellIn: -11,
+    Quality: 3
+  },
+  {
+    Name: Devout Zealot's Ring,
+    SellIn: 1
+  },
+  {
+    Name: Conjured Mana Cake,
+    SellIn: 2,
+    Quality: 5
+  },
+  {
+    Name: Aged Brie,
+    SellIn: 4,
+    Quality: 41
+  },
+  {
+    Name: Aged Brie,
+    SellIn: 9,
+    Quality: 50
+  },
+  {
+    Name: Backstage passes to a TAFKAL80ETC concert,
+    SellIn: -2
+  },
+  {
+    Name: Backstage passes to a TAFKAL80ETC concert,
+    SellIn: 9,
+    Quality: 12
+  }
+]

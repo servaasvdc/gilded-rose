@@ -16,6 +16,10 @@ public class GildedRose(IList<Item> items)
                     {
                         items[i].Quality = items[i].Quality - 1;
                     }
+                    if (items[i].Name == "Conjured Mana Cake")
+                    {
+                        items[i].Quality = items[i].Quality - 1;
+                    }   
                 }
             }
             else
@@ -59,6 +63,10 @@ public class GildedRose(IList<Item> items)
                         if (items[i].Quality > 0)
                         {
                             if (items[i].Name != "Sulfuras, Hand of Ragnaros")
+                            {
+                                items[i].Quality = items[i].Quality - 1;
+                            }
+                            if (items[i].Name == "Conjured Mana Cake")
                             {
                                 items[i].Quality = items[i].Quality - 1;
                             }

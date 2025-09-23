@@ -18,13 +18,10 @@ public class UpdateQualityShould
     [Fact]
     public void NotChangeName()
     {
-        // Arrange
         _items.Add(new Item { Name = "Cursed Stone Idol", SellIn = 10, Quality = 5 });
         
-        // Act
         _sut.UpdateQuality();
         
-        // Assert
         Assert.Equal("Cursed Stone Idol", _items[0].Name);
     }
     
@@ -108,34 +105,17 @@ public class UpdateQualityShould
         Assert.Equal(40, _items[0].Quality);
     }
     
-    [Fact]
-    public void IncreaseInQualityBy1_WhenItemIsBackstagePass_AndSellDateIsMoreThan10DaysAway()
+    [Theory]
+    [InlineData(11, 40, 41)]
+    [InlineData(10, 40, 42)]
+    [InlineData(5, 40, 43)]
+    public void IncreaseInQuality_WhenItemIsBackstagePass(int sellIn, int quality, int expectedQuality)
     {
         _items.Add(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = 40 });
         
         _sut.UpdateQuality();
         
         Assert.Equal(41, _items[0].Quality);
-    }
-    
-    [Fact]
-    public void IncreaseInQualityBy2_WhenItemIsBackstagePass_AndSellDateIs10DaysOrLessAway()
-    {
-        _items.Add(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 40 });
-        
-        _sut.UpdateQuality();
-        
-        Assert.Equal(42, _items[0].Quality);
-    }
-    
-    [Fact]
-    public void IncreaseInQualityBy3_WhenItemIsBackstagePass_AndSellDateIs5DaysOrLessAway()
-    {
-        _items.Add(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 40 });
-        
-        _sut.UpdateQuality();
-        
-        Assert.Equal(43, _items[0].Quality);
     }
     
     [Fact]
@@ -148,13 +128,15 @@ public class UpdateQualityShould
         Assert.Equal(0, _items[0].Quality);
     }
     
-    [Fact]
-    public void DegradeConjuredItemsTwiceAsFast()
+    [Theory]
+    [InlineData(5, 10, 8)]
+    [InlineData(-1, 10, 6)]
+    public void DegradeConjuredItemsTwiceAsFast(int sellIn, int quality, int expectedQuality)
     {
-        _items.Add(new Item { Name = "Conjured Mana Cake", SellIn = 5, Quality = 10 });
+        _items.Add(new Item { Name = "Conjured Mana Cake", SellIn = sellIn, Quality = quality });
         
         _sut.UpdateQuality();
         
-        Assert.Equal(8, _items[0].Quality);  
+        Assert.Equal(expectedQuality, _items[0].Quality);  
     }
 }

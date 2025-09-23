@@ -147,4 +147,14 @@ public class UpdateQualityShould
         
         Assert.Equal(0, _items[0].Quality);
     }
+    
+    [Fact]
+    public void DegradeConjuredItemsTwiceAsFast()
+    {
+        _items.Add(new Item { Name = "Conjured Mana Cake", SellIn = 5, Quality = 10 });
+        
+        _sut.UpdateQuality();
+        
+        Assert.Equal(8, _items[0].Quality);  
+    }
 }

@@ -1,5 +1,10 @@
 namespace GildedRoseKata;
 
+/// <summary>
+/// Strategy pattern that encapsulates increase/decrease logic for each item type.
+///
+/// Currently supported types: Sulfuras, Aged Brie, Backstage passes, Conjured items, regular items.
+/// </summary>
 public interface IUpdateStrategy
 {
     void UpdateItem(Item item);
@@ -16,7 +21,6 @@ public class RegularItemStrategy : IUpdateStrategy
         var decreaseQualityBy = item.SellIn >= 0 ? 1 : 2;
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
-        // Rule: "The Quality of an item is never negative"
         item.Quality = Helpers.DecreaseQuality(item.Quality, decreaseQualityBy);
     }
 }
@@ -41,7 +45,6 @@ public class AgedBrieStrategy : IUpdateStrategy
         var increaseQualityBy = item.SellIn >= 0 ? 1 : 2;
 
         // Rule: "At the end of each day our system increases the value for Quality for every item"
-        // Rule: "The Quality of an item is never more than 50"
         item.Quality = Helpers.IncreaseQuality(item.Quality, increaseQualityBy);
     }
 }
@@ -58,10 +61,11 @@ public class BackstagePassStrategy : IUpdateStrategy
             // Rules:
             // "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches;
             //
-            // Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
-            // Quality drops to 0 after the concert
+            // Rule: "Quality drops to 0 after the concert"
             < 0 => 0,
+            // Rule: "Quality increases by 3 when there are 5 days or less"
             < 5 => Helpers.IncreaseQuality(item.Quality, 3),
+            // Rule: "Quality increases by 2 when there are 10 days or less"
             < 10 => Helpers.IncreaseQuality(item.Quality, 2),
             _ => Helpers.IncreaseQuality(item.Quality, 1)
         };
@@ -80,7 +84,6 @@ public class ConjuredItemStrategy : IUpdateStrategy
         var decreaseQualityBy = item.SellIn >= 0 ? 2 : 4;
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
-        // Rule: "The Quality of an item is never negative"
         item.Quality = Helpers.DecreaseQuality(item.Quality, decreaseQualityBy);
     }
 }

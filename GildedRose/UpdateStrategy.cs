@@ -7,6 +7,12 @@ public interface IUpdateStrategy
     void UpdateItem(Item item);
 }
 
+internal static class Constants
+{
+    public const int MinQuality = 0;
+    public const int MaxQuality = 50;
+}
+
 public class RegularItemStrategy : IUpdateStrategy
 {
     public void UpdateItem(Item item)
@@ -19,7 +25,7 @@ public class RegularItemStrategy : IUpdateStrategy
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
         // Rule: "The Quality of an item is never negative"
-        item.Quality = Math.Max(0, item.Quality - decreaseQualityBy);
+        item.Quality = Math.Max(Constants.MinQuality, item.Quality - decreaseQualityBy);
     }
 }
 
@@ -44,7 +50,7 @@ public class AgedBrieStrategy : IUpdateStrategy
 
         // Rule: "At the end of each day our system increases the value for Quality for every item"
         // Rule: "The Quality of an item is never more than 50"
-        item.Quality = Math.Min(50, item.Quality + increaseQualityBy);
+        item.Quality = Math.Min(Constants.MaxQuality, item.Quality + increaseQualityBy);
     }
 }
 
@@ -63,9 +69,9 @@ public class BackstagePassStrategy : IUpdateStrategy
             // Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
             // Quality drops to 0 after the concert
             < 0 => 0,
-            < 5 => Math.Min(50, item.Quality + 3),
-            < 10 => Math.Min(50, item.Quality + 2),
-            _ => Math.Min(50, item.Quality + 1)
+            < 5 => Math.Min(Constants.MaxQuality, item.Quality + 3),
+            < 10 => Math.Min(Constants.MaxQuality, item.Quality + 2),
+            _ => Math.Min(Constants.MaxQuality, item.Quality + 1)
         };
     }
 }
@@ -77,13 +83,14 @@ public class ConjuredItemStrategy : IUpdateStrategy
         // Rule: "At the end of each day our system lowers the value for SellIn for every item"
         item.SellIn--;
         
-
         // Rule: ""Conjured" items degrade in Quality twice as fast as normal items"
         // Rule: "Once the sell by date has passed, Quality degrades twice as fast"
         var decreaseQualityBy = item.SellIn >= 0 ? 2 : 4;
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
         // Rule: "The Quality of an item is never negative"
-        item.Quality = Math.Max(0, item.Quality - decreaseQualityBy);
+        item.Quality = Math.Max(Constants.MinQuality, item.Quality - decreaseQualityBy);
     }
 }
+
+

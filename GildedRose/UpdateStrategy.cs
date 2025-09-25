@@ -14,16 +14,8 @@ public class RegularItemStrategy : IUpdateStrategy
         // Rule: "At the end of each day our system lowers the value for SellIn for every item"
         item.SellIn -= 1;
 
-        int decreaseQualityBy;
-        if (item.SellIn >= 0)
-        {
-            decreaseQualityBy = 1;
-        }
-        else
-        {
-            // Rule: "Once the sell by date has passed, Quality degrades twice as fast"
-            decreaseQualityBy = 2;
-        }
+        // Rule: "Once the sell by date has passed, Quality degrades twice as fast"
+        var decreaseQualityBy = item.SellIn >= 0 ? 1 : 2;
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
         // Rule: "The Quality of an item is never negative"
@@ -47,16 +39,8 @@ public class AgedBrieStrategy : IUpdateStrategy
         item.SellIn -= 1;
         
         // Rule: ""Aged Brie" actually increases in Quality the older it gets"
-        int increaseQualityBy;
-        if (item.SellIn >= 0)
-        {
-            increaseQualityBy = 1;
-        }
-        else
-        {
-            // Rule: "Once the sell by date has passed, Quality increases twice as fast"
-            increaseQualityBy = 2;
-        }
+        // Rule: "Once the sell by date has passed, Quality increases twice as fast"
+        var increaseQualityBy = item.SellIn >= 0 ? 1 : 2;
 
         // Rule: "At the end of each day our system increases the value for Quality for every item"
         // Rule: "The Quality of an item is never more than 50"
@@ -71,26 +55,18 @@ public class BackstagePassStrategy : IUpdateStrategy
         // Rule: "At the end of each day our system lowers the value for SellIn for every item"
         item.SellIn--;
 
-        switch (item.SellIn)
+        item.Quality = item.SellIn switch
         {
             // Rules:
             // "Backstage passes", like aged brie, increases in Quality as its SellIn value approaches;
             //
             // Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
             // Quality drops to 0 after the concert
-            case < 0:
-                item.Quality = 0;
-                break;
-            case < 5:
-                item.Quality = Math.Min(50, item.Quality + 3);
-                break;
-            case < 10:
-                item.Quality = Math.Min(50, item.Quality + 2);
-                break;
-            default:
-                item.Quality = Math.Min(50, item.Quality + 1);
-                break;
-        }
+            < 0 => 0,
+            < 5 => Math.Min(50, item.Quality + 3),
+            < 10 => Math.Min(50, item.Quality + 2),
+            _ => Math.Min(50, item.Quality + 1)
+        };
     }
 }
 
@@ -103,16 +79,8 @@ public class ConjuredItemStrategy : IUpdateStrategy
         
 
         // Rule: ""Conjured" items degrade in Quality twice as fast as normal items"
-        int decreaseQualityBy;
-        if (item.SellIn >= 0)
-        {
-            decreaseQualityBy = 2;
-        }
-        else
-        {
-            // Rule: "Once the sell by date has passed, Quality degrades twice as fast"
-            decreaseQualityBy = 4;
-        }
+        // Rule: "Once the sell by date has passed, Quality degrades twice as fast"
+        var decreaseQualityBy = item.SellIn >= 0 ? 2 : 4;
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
         // Rule: "The Quality of an item is never negative"

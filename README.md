@@ -1,5 +1,8 @@
 # Gilded Rose starting position in C# xUnit
 
+## Prerequisites
+- NET 9.0
+
 ## Build the project
 
 Use your normal build tools to build the projects in Debug mode.
@@ -14,7 +17,7 @@ dotnet build GildedRose.sln -c Debug
 For e.g. 10 days:
 
 ``` cmd
-GildedRose/bin/Debug/net8.0/GildedRose 10
+GildedRose/bin/Debug/net9.0/GildedRose 10
 ```
 
 ## Run all the unit tests

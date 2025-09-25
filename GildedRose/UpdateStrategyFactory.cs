@@ -5,21 +5,24 @@ namespace GildedRoseKata;
 
 public class UpdateStrategyFactory
 {
-    private readonly Dictionary<string, IUpdateStrategy> _strategies = new();
-    private readonly IUpdateStrategy _strategy = new RegularItemStrategy();
+    private readonly Dictionary<string, IUpdateStrategy> _nonRegularItemStrategies = new();
+    private readonly IUpdateStrategy _regularItemStrategy = new RegularItemStrategy();
 
     public UpdateStrategyFactory()
     {
-        _strategies["Sulfuras, Hand of Ragnaros"] = new SulfurasStrategy();
+        _nonRegularItemStrategies["Sulfuras, Hand of Ragnaros"] = new SulfurasStrategy();
+        _nonRegularItemStrategies["Aged Brie"] = new AgedBrieStrategy();
+        _nonRegularItemStrategies["Backstage passes to a TAFKAL80ETC concert"] = new BackstagePassStrategy();
+        _nonRegularItemStrategies["Conjured Mana Cake"] = new ConjuredItemStrategy();
     }
 
     public IUpdateStrategy GetStrategy(string name)
     {
-        if (_strategies.TryGetValue(name, out var strategy))
+        if (_nonRegularItemStrategies.TryGetValue(name, out var strategy))
         {
             return strategy;
         }
 
-        throw new ArgumentException($"Cannot find a strategy associated with {name}");
+        return _regularItemStrategy;
     }
 }

@@ -11,17 +11,22 @@ public class UpdateStrategyFactory
     {
         _nonRegularItemStrategies["Sulfuras, Hand of Ragnaros"] = new SulfurasStrategy();
         _nonRegularItemStrategies["Aged Brie"] = new AgedBrieStrategy();
-        _nonRegularItemStrategies["Backstage passes to a TAFKAL80ETC concert"] = new BackstagePassStrategy();
-        _nonRegularItemStrategies["Conjured Mana Cake"] = new ConjuredItemStrategy();
+        _nonRegularItemStrategies["Backstage pass"] = new BackstagePassStrategy();
+        _nonRegularItemStrategies["Conjured Item"] = new ConjuredItemStrategy();
     }
 
     public IUpdateStrategy GetStrategy(string name)
     {
-        if (_nonRegularItemStrategies.TryGetValue(name, out var strategy))
+        if (name.StartsWith("Conjured"))
         {
-            return strategy;
+            return _nonRegularItemStrategies["Conjured Item"];
         }
 
-        return _regularItemStrategy;
+        if (name.StartsWith("Backstage pass"))
+        {
+            return _nonRegularItemStrategies["Backstage pass"];
+        }
+        
+        return _nonRegularItemStrategies.TryGetValue(name, out var strategy) ? strategy : _regularItemStrategy;
     }
 }

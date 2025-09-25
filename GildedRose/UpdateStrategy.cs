@@ -1,29 +1,8 @@
-using System;
-
 namespace GildedRoseKata;
 
 public interface IUpdateStrategy
 {
     void UpdateItem(Item item);
-}
-
-internal static class Constants
-{
-    public const int MinQuality = 0;
-    public const int MaxQuality = 50;
-}
-
-internal static class Helper
-{
-    public static int DecreaseQuality(int quality, int by)
-    {
-        return Math.Max(Constants.MinQuality, quality - by);
-    }
-
-    public static int IncreaseQuality(int quality, int by)
-    {
-        return Math.Min(Constants.MaxQuality, quality + by);
-    }
 }
 
 public class RegularItemStrategy : IUpdateStrategy
@@ -38,7 +17,7 @@ public class RegularItemStrategy : IUpdateStrategy
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
         // Rule: "The Quality of an item is never negative"
-        item.Quality = Helper.DecreaseQuality(item.Quality, decreaseQualityBy);
+        item.Quality = Helpers.DecreaseQuality(item.Quality, decreaseQualityBy);
     }
 }
 
@@ -63,7 +42,7 @@ public class AgedBrieStrategy : IUpdateStrategy
 
         // Rule: "At the end of each day our system increases the value for Quality for every item"
         // Rule: "The Quality of an item is never more than 50"
-        item.Quality = Helper.IncreaseQuality(item.Quality, increaseQualityBy);
+        item.Quality = Helpers.IncreaseQuality(item.Quality, increaseQualityBy);
     }
 }
 
@@ -82,9 +61,9 @@ public class BackstagePassStrategy : IUpdateStrategy
             // Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
             // Quality drops to 0 after the concert
             < 0 => 0,
-            < 5 => Helper.IncreaseQuality(item.Quality, 3),
-            < 10 => Helper.IncreaseQuality(item.Quality, 2),
-            _ => Helper.IncreaseQuality(item.Quality, 1)
+            < 5 => Helpers.IncreaseQuality(item.Quality, 3),
+            < 10 => Helpers.IncreaseQuality(item.Quality, 2),
+            _ => Helpers.IncreaseQuality(item.Quality, 1)
         };
     }
 }
@@ -102,7 +81,7 @@ public class ConjuredItemStrategy : IUpdateStrategy
 
         // Rule: "At the end of each day our system lowers the value for Quality for every item"
         // Rule: "The Quality of an item is never negative"
-        item.Quality = Helper.DecreaseQuality(item.Quality, decreaseQualityBy);
+        item.Quality = Helpers.DecreaseQuality(item.Quality, decreaseQualityBy);
     }
 }
 

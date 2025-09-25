@@ -4,20 +4,22 @@ namespace GildedRoseKata;
 
 public class GildedRose(IList<Item> items)
 {
+    private readonly UpdateStrategyFactory _updateStrategyFactory = new();
+    
     public void UpdateQuality()
     {
         foreach (var item in items)
         {
             if (item.Name == "Sulfuras, Hand of Ragnaros")
             {
-                // Rule: "Sulfuras", being a legendary item, never has to be sold or decreases in Quality.
+                var strategy = _updateStrategyFactory.GetStrategy(item.Name);
+                strategy.UpdateItem(item);
                 continue;
             }
             if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
             {
                 if (item.Quality > 0)
                 {
-
                     item.Quality = item.Quality - 1;
                     
                     if (item.Name == "Conjured Mana Cake")

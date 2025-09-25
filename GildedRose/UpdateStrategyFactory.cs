@@ -9,10 +9,10 @@ public class UpdateStrategyFactory
 
     public UpdateStrategyFactory()
     {
-        _nonRegularItemStrategies["Sulfuras, Hand of Ragnaros"] = new SulfurasStrategy();
-        _nonRegularItemStrategies["Aged Brie"] = new AgedBrieStrategy();
-        _nonRegularItemStrategies["Backstage pass"] = new BackstagePassStrategy();
-        _nonRegularItemStrategies["Conjured Item"] = new ConjuredItemStrategy();
+        _nonRegularItemStrategies[Constants.Sulfuras] = new SulfurasStrategy();
+        _nonRegularItemStrategies[Constants.AgedBrie] = new AgedBrieStrategy();
+        _nonRegularItemStrategies[Constants.BackstagePass] = new BackstagePassStrategy();
+        _nonRegularItemStrategies[Constants.ConjuredItem] = new ConjuredItemStrategy();
     }
 
     public IUpdateStrategy GetStrategy(string name)

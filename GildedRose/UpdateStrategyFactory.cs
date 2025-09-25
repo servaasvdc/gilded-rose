@@ -27,6 +27,6 @@ public class UpdateStrategyFactory
             return _nonRegularItemStrategies["Backstage pass"];
         }
         
-        return _nonRegularItemStrategies.TryGetValue(name, out var strategy) ? strategy : _regularItemStrategy;
+        return _nonRegularItemStrategies.GetValueOrDefault(name, _regularItemStrategy);
     }
 }

@@ -130,6 +130,7 @@ public class UpdateQualityShould
     
     [Theory]
     [InlineData(5, 10, 8)]
+    [InlineData(1, 10, 8)]
     [InlineData(-1, 10, 6)]
     public void DegradeConjuredItemsTwiceAsFast(int sellIn, int quality, int expectedQuality)
     {
